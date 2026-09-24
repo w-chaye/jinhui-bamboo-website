@@ -126,6 +126,13 @@
         .topbar-title { font-size: 20px; font-weight: 500; }
         .topbar-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
         .topbar-right { display: flex; align-items: center; gap: 16px; }
+        .topbar-btn {
+            padding: 10px 20px; background: var(--green-500); color: white;
+            border: none; border-radius: 8px; font-size: 14px; font-weight: 500;
+            cursor: pointer; transition: all 0.2s; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+        .topbar-btn:hover { background: var(--green-300); transform: translateY(-1px); }
 
         .page-content { padding: 32px 40px; display: none; }
         .page-content.active { display: block; animation: fadeIn 0.4s ease; }
@@ -271,6 +278,12 @@
         .product-info { padding: 18px 20px 20px; }
         .product-name { font-family: var(--serif); font-size: 17px; font-weight: 600; margin-bottom: 6px; }
         .product-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px; }
+        .product-footer {
+            display: flex; align-items: center; justify-content: space-between;
+            padding-top: 12px; border-top: 1px solid var(--border);
+        }
+        .product-price { font-size: 13px; color: var(--green-300); }
+        .product-detail-btn { font-size: 12px; color: var(--green-300); text-decoration: none; }
 
         /* ===== 关于我们 ===== */
         .about-hero {
@@ -351,6 +364,36 @@
         .faq-item.open .faq-answer { max-height: 300px; }
         .faq-a-text { padding: 0 24px 20px; font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
 
+        /* ===== 图片预览 ===== */
+        .image-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-out;
+        }
+        .image-modal.open { display: flex; }
+        .image-modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        .image-modal-close {
+            position: absolute;
+            top: 24px;
+            right: 32px;
+            color: white;
+            font-size: 36px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .image-modal-close:hover { opacity: 1; }
+
         /* ===== 移动端遮罩 ===== */
         .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 90; }
 
@@ -397,7 +440,7 @@
                     </div>
                     <div class="nav-item" data-page="products">
                         <div class="nav-icon">▤</div><span>产品中心</span>
-                        <span class="nav-badge">12</span>
+                        <span class="nav-badge">14</span>
                     </div>
                     <div class="nav-item" data-page="about">
                         <div class="nav-icon">◎</div><span>关于我们</span>
@@ -474,31 +517,35 @@
                         </div>
                         <div class="hot-products">
                             <div class="hot-product" data-nav="products">
-                                <div class="hot-product-img">🎋</div>
+                                <div class="hot-product-img" style="background: url('images/竹排.jpg') center/cover;">
+                                </div>
                                 <div class="hot-product-info">
-                                    <div class="hot-product-name">竹跳板</div>
+                                    <div class="hot-product-name">竹排/竹跳板</div>
                                     <div class="hot-product-desc">工程建筑专用，多种规格</div>
                                 </div>
                             </div>
                             <div class="hot-product" data-nav="products">
-                                <div class="hot-product-img">🪜</div>
+                                <div class="hot-product-img" style="background: url('images/3米竹片.jpg') center/cover;">
+                                </div>
                                 <div class="hot-product-info">
-                                    <div class="hot-product-name">竹梯子</div>
-                                    <div class="hot-product-desc">家用工程用，稳固安全</div>
+                                    <div class="hot-product-name">竹片系列</div>
+                                    <div class="hot-product-desc">3米、4米、大棚竹片齐全</div>
                                 </div>
                             </div>
                             <div class="hot-product" data-nav="products">
-                                <div class="hot-product-img">📦</div>
+                                <div class="hot-product-img" style="background: url('images/7-8米毛竹.jpg') center/cover;">
+                                </div>
                                 <div class="hot-product-info">
-                                    <div class="hot-product-name">竹托盘</div>
-                                    <div class="hot-product-desc">仓储物流，承重力强</div>
+                                    <div class="hot-product-name">大毛竹杆</div>
+                                    <div class="hot-product-desc">6-8米，工程搭架专用</div>
                                 </div>
                             </div>
                             <div class="hot-product" data-nav="products">
-                                <div class="hot-product-img">🧹</div>
+                                <div class="hot-product-img" style="background: url('images/竹签.jpg') center/cover;">
+                                </div>
                                 <div class="hot-product-info">
-                                    <div class="hot-product-name">竹扫帚</div>
-                                    <div class="hot-product-desc">手工扎制，结实耐用</div>
+                                    <div class="hot-product-name">竹签</div>
+                                    <div class="hot-product-desc">多规格可选，量大从优</div>
                                 </div>
                             </div>
                         </div>
@@ -584,6 +631,33 @@
                     </div>
                 </div>
 
+                <!-- 视频展示 -->
+                <div class="card" style="margin-bottom: 24px;">
+                    <div class="section-header">
+                        <div class="section-title">实拍展示</div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                        <div>
+                            <video controls style="width: 100%; border-radius: 8px; background: #000;">
+                                <source src="videos/店里视频.mp4" type="video/mp4">
+                            </video>
+                            <div style="text-align: center; margin-top: 10px; font-size: 13px; color: var(--text-secondary);">门店实拍</div>
+                        </div>
+                        <div>
+                            <video controls style="width: 100%; border-radius: 8px; background: #000;">
+                                <source src="videos/进货视频.mp4" type="video/mp4">
+                            </video>
+                            <div style="text-align: center; margin-top: 10px; font-size: 13px; color: var(--text-secondary);">进货实拍</div>
+                        </div>
+                        <div>
+                            <video controls style="width: 100%; border-radius: 8px; background: #000;">
+                                <source src="videos/送货视频.mp4" type="video/mp4">
+                            </video>
+                            <div style="text-align: center; margin-top: 10px; font-size: 13px; color: var(--text-secondary);">送货实拍</div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="card" style="text-align: center; padding: 36px;">
                     <div style="font-family: var(--serif); font-size: 20px; color: var(--green-300); margin-bottom: 8px;">
                         天然竹材 · 匠心品质 · 批发直供
@@ -604,119 +678,153 @@
                 </div>
                 <div class="product-filter">
                     <button class="filter-btn active" data-filter="all">全部产品</button>
-                    <button class="filter-btn" data-filter="building">建筑用</button>
-                    <button class="filter-btn" data-filter="farm">养殖用</button>
-                    <button class="filter-btn" data-filter="storage">仓储用</button>
-                    <button class="filter-btn" data-filter="daily">日常用</button>
+                    <button class="filter-btn" data-filter="building">建筑用材</button>
+                    <button class="filter-btn" data-filter="agri">农用绿化</button>
+                    <button class="filter-btn" data-filter="other">其他制品</button>
                 </div>
                 <div class="product-grid">
                     <div class="product-card" data-category="building">
                         <div class="product-img">
-                            <div class="product-img-placeholder"><div class="icon">🎋</div><div class="text">产品图片</div></div>
+                            <img src="images/2.5米架条.jpg" alt="2.5米架条" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: white; font-size: 11px; padding: 3px 8px; border-radius: 4px; pointer-events: none;">🔍 点击放大</div>
                         </div>
                         <div class="product-info">
-                            <div class="product-name">竹片</div>
-                            <div class="product-desc">多种规格，自产自销，建筑/养殖广泛使用</div>
+                            <div class="product-name">2.5米架条</div>
+                            <div class="product-desc">建筑搭架专用，笔直结实，多种粗细可选</div>
                         </div>
                     </div>
                     <div class="product-card" data-category="building">
                         <div class="product-img">
-                            <div class="product-img-placeholder"><div class="icon">🎍</div><div class="text">产品图片</div></div>
+                            <img src="images/3米竹片.jpg" alt="3米竹片" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: white; font-size: 11px; padding: 3px 8px; border-radius: 4px; pointer-events: none;">🔍 点击放大</div>
                         </div>
                         <div class="product-info">
-                            <div class="product-name">竹竿</div>
-                            <div class="product-desc">粗细长短齐全，按需供应，质量上乘</div>
+                            <div class="product-name">3米竹片</div>
+                            <div class="product-desc">3米长竹片，建筑养殖广泛使用，规格齐全</div>
                         </div>
                     </div>
                     <div class="product-card" data-category="building">
                         <div class="product-img">
-                            <div class="product-img-placeholder"><div class="icon">🧱</div><div class="text">产品图片</div></div>
+                            <img src="images/3-4米竹片.jpg" alt="3-4米竹片" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: white; font-size: 11px; padding: 3px 8px; border-radius: 4px; pointer-events: none;">🔍 点击放大</div>
                         </div>
                         <div class="product-info">
-                            <div class="product-name">竹架条</div>
-                            <div class="product-desc">建筑搭架专用，结实耐用，规格多样</div>
+                            <div class="product-name">3-4米竹片</div>
+                            <div class="product-desc">3到4米竹片，承重力强，适合大棚养殖用</div>
                         </div>
                     </div>
                     <div class="product-card" data-category="building">
                         <div class="product-img">
-                            <div class="product-img-placeholder"><div class="icon">🪜</div><div class="text">产品图片</div></div>
+                            <img src="images/农村大棚竹片.jpg" alt="农村大棚竹片" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: white; font-size: 11px; padding: 3px 8px; border-radius: 4px; pointer-events: none;">🔍 点击放大</div>
                         </div>
                         <div class="product-info">
-                            <div class="product-name">竹跳板</div>
-                            <div class="product-desc">工程建筑用板，多种规格，量大从优</div>
+                            <div class="product-name">农村大棚竹片</div>
+                            <div class="product-desc">大棚拱架专用竹片，韧性好，经久耐用</div>
                         </div>
                     </div>
-                    <div class="product-card" data-category="daily">
+                    <div class="product-card" data-category="building">
                         <div class="product-img">
-                            <div class="product-img-placeholder"><div class="icon">🪜</div><div class="text">产品图片</div></div>
+                            <img src="images/6-7-8米竹杆.jpg" alt="6-7-8米竹杆" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: white; font-size: 11px; padding: 3px 8px; border-radius: 4px; pointer-events: none;">🔍 点击放大</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">6-7-8米竹杆</div>
+                            <div class="product-desc">6到8米大竹杆，工程搭架、旗杆专用</div>
+                        </div>
+                    </div>
+                    <div class="product-card" data-category="building">
+                        <div class="product-img">
+                            <img src="images/7-8米毛竹.jpg" alt="7-8米毛竹" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: white; font-size: 11px; padding: 3px 8px; border-radius: 4px; pointer-events: none;">🔍 点击放大</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">7-8米毛竹</div>
+                            <div class="product-desc">7到8米优质毛竹，粗壮结实，工程建筑专用</div>
+                        </div>
+                    </div>
+                    <div class="product-card" data-category="agri">
+                        <div class="product-img">
+                            <img src="images/2-2.5米绿化杆.jpg" alt="2-2.5米绿化杆" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: white; font-size: 11px; padding: 3px 8px; border-radius: 4px; pointer-events: none;">🔍 点击放大</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">2-2.5米绿化杆</div>
+                            <div class="product-desc">绿化树木支撑专用，轻便结实，2到2.5米</div>
+                        </div>
+                    </div>
+                    <div class="product-card" data-category="agri">
+                        <div class="product-img">
+                            <img src="images/2-3米育秧片.jpg" alt="2-3米育秧片" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: white; font-size: 11px; padding: 3px 8px; border-radius: 4px; pointer-events: none;">🔍 点击放大</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">2-3米育秧片</div>
+                            <div class="product-desc">水稻育秧、蔬菜大棚专用，2到3米规格</div>
+                        </div>
+                    </div>
+                    <div class="product-card" data-category="agri">
+                        <div class="product-img">
+                            <img src="images/2.5-3米旗杆.jpg" alt="2.5-3米旗杆" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: white; font-size: 11px; padding: 3px 8px; border-radius: 4px; pointer-events: none;">🔍 点击放大</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">2.5-3米旗杆</div>
+                            <div class="product-desc">2.5到3米竹旗杆，工地、厂区专用</div>
+                        </div>
+                    </div>
+                    <div class="product-card" data-category="other">
+                        <div class="product-img">
+                            <img src="images/竹排.jpg" alt="竹排" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: white; font-size: 11px; padding: 3px 8px; border-radius: 4px; pointer-events: none;">🔍 点击放大</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">竹排</div>
+                            <div class="product-desc">竹跳板、竹排，建筑施工专用，多种规格</div>
+                        </div>
+                    </div>
+                    <div class="product-card" data-category="other">
+                        <div class="product-img">
+                            <img src="images/竹梯子.jpg" alt="竹梯子" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: white; font-size: 11px; padding: 3px 8px; border-radius: 4px; pointer-events: none;">🔍 点击放大</div>
                         </div>
                         <div class="product-info">
                             <div class="product-name">竹梯子</div>
-                            <div class="product-desc">家用工程用，稳固安全，多种高度可选</div>
+                            <div class="product-desc">家用工程两用，稳固安全，多种高度可选</div>
                         </div>
                     </div>
-                    <div class="product-card" data-category="daily">
+                    <div class="product-card" data-category="other">
                         <div class="product-img">
-                            <div class="product-img-placeholder"><div class="icon">🪜</div><div class="text">产品图片</div></div>
-                        </div>
-                        <div class="product-info">
-                            <div class="product-name">铝梯子</div>
-                            <div class="product-desc">轻便稳固，多种型号，家用工程两用</div>
-                        </div>
-                    </div>
-                    <div class="product-card" data-category="storage">
-                        <div class="product-img">
-                            <div class="product-img-placeholder"><div class="icon">📦</div><div class="text">产品图片</div></div>
-                        </div>
-                        <div class="product-info">
-                            <div class="product-name">竹托盘</div>
-                            <div class="product-desc">仓储物流专用，承重力强，经久耐用</div>
-                        </div>
-                    </div>
-                    <div class="product-card" data-category="storage">
-                        <div class="product-img">
-                            <div class="product-img-placeholder"><div class="icon">🟫</div><div class="text">产品图片</div></div>
-                        </div>
-                        <div class="product-info">
-                            <div class="product-name">竹垫板</div>
-                            <div class="product-desc">仓库专用防潮垫板，规格齐全，可定制</div>
-                        </div>
-                    </div>
-                    <div class="product-card" data-category="farm">
-                        <div class="product-img">
-                            <div class="product-img-placeholder"><div class="icon">🐔</div><div class="text">产品图片</div></div>
-                        </div>
-                        <div class="product-info">
-                            <div class="product-name">养鸡踏板</div>
-                            <div class="product-desc">养殖专用踏板，防腐耐磨，适合鸡场使用</div>
-                        </div>
-                    </div>
-                    <div class="product-card" data-category="daily">
-                        <div class="product-img">
-                            <div class="product-img-placeholder"><div class="icon">🧹</div><div class="text">产品图片</div></div>
+                            <img src="images/竹扫帚.jpg" alt="竹扫帚" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: white; font-size: 11px; padding: 3px 8px; border-radius: 4px; pointer-events: none;">🔍 点击放大</div>
                         </div>
                         <div class="product-info">
                             <div class="product-name">竹扫帚</div>
-                            <div class="product-desc">手工扎制，结实耐用，多种规格</div>
+                            <div class="product-desc">手工扎制，结实耐用，多种规格可选</div>
                         </div>
                     </div>
-                    <div class="product-card" data-category="daily">
+                    <div class="product-card" data-category="other">
                         <div class="product-img">
-                            <div class="product-img-placeholder"><div class="icon">🌾</div><div class="text">产品图片</div></div>
+                            <img src="images/竹签.jpg" alt="竹签" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: white; font-size: 11px; padding: 3px 8px; border-radius: 4px; pointer-events: none;">🔍 点击放大</div>
                         </div>
                         <div class="product-info">
-                            <div class="product-name">草绳</div>
-                            <div class="product-desc">包装捆绑专用，多规格可选，量大从优</div>
+                            <div class="product-name">竹签</div>
+                            <div class="product-desc">多种规格竹签，手工/工业用均可，量大从优</div>
                         </div>
                     </div>
-                    <div class="product-card" data-category="building">
+                    <div class="product-card" data-category="other">
                         <div class="product-img">
                             <span class="product-tag">定制</span>
-                            <div class="product-img-placeholder"><div class="icon">✂️</div><div class="text">产品图片</div></div>
+                            <div class="product-img-placeholder"><div class="icon">✂️</div><div class="text">加工定制</div></div>
                         </div>
                         <div class="product-info">
                             <div class="product-name">加工定制</div>
-                            <div class="product-desc">来图来样，按需加工，满足特殊需求</div>
+                            <div class="product-desc">来图来样，按需加工，满足特殊规格需求</div>
+                            <div class="product-footer">
+                                <span class="product-price">价格面议</span>
+                                <a class="product-detail-btn" href="tel:15945784971">咨询 →</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -789,44 +897,22 @@
                     </div>
                 </div>
 
-                <!-- 电话 - 两个一行 -->
-                <div class="contact-grid">
+                <!-- 电话 - 三个并排 -->
+                <div class="contact-grid" style="grid-template-columns: repeat(3, 1fr);">
                     <div class="contact-card">
                         <div class="contact-icon">📞</div>
-                        <div class="contact-label">销售热线一</div>
-                        <a href="tel:15945784971" class="contact-phone-link">159 4578 4971</a>
-                        <div class="contact-detail">联系人：吴金琰</div>
-                    </div>
-                    <div class="contact-card">
-                        <div class="contact-icon">📞</div>
-                        <div class="contact-label">销售热线二</div>
+                        <div class="contact-label">咨询热线一</div>
                         <a href="tel:18404050153" class="contact-phone-link">184 0405 0153</a>
-                        <div class="contact-detail">联系人：吴玉坤</div>
-                    </div>
-                </div>
-
-                <!-- 地址 - 两个一行 -->
-                <div class="contact-grid">
-                    <div class="contact-card">
-                        <div class="contact-icon">🏪</div>
-                        <div class="contact-label">经营门店</div>
-                        <div class="contact-value">禧龙批发市场店</div>
-                        <a href="https://uri.amap.com/search?keyword=禧龙五金建材批发市场&city=哈尔滨" target="_blank" class="contact-map-link">
-                            黑龙江省哈尔滨市<br>
-                            禧龙五金建材批发市场<br>
-                            东区 12 街区 A 栋 20 号
-                            <div class="map-arrow">📍 点击导航 →</div>
-                        </a>
                     </div>
                     <div class="contact-card">
-                        <div class="contact-icon">🏭</div>
-                        <div class="contact-label">仓库提货</div>
-                        <div class="contact-value">放货地址</div>
-                        <a href="https://uri.amap.com/search?keyword=化工路258号&city=哈尔滨" target="_blank" class="contact-map-link">
-                            黑龙江省哈尔滨市<br>
-                            化工路 258 号院里
-                            <div class="map-arrow">📍 点击导航 →</div>
-                        </a>
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-label">咨询热线二</div>
+                        <a href="tel:15945784971" class="contact-phone-link">159 4578 4971</a>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-label">咨询热线三</div>
+                        <a href="tel:15045104992" class="contact-phone-link">150 4510 4992</a>
                     </div>
                 </div>
             </div>
@@ -899,6 +985,12 @@
         </main>
     </div>
 
+    <!-- 图片预览弹窗 -->
+    <div class="image-modal" id="imageModal" onclick="closeImageModal()">
+        <span class="image-modal-close">&times;</span>
+        <img id="modalImage" src="" alt="预览">
+    </div>
+
     <script>
         const navItems = document.querySelectorAll('.nav-item');
         const pageContents = document.querySelectorAll('.page-content');
@@ -946,6 +1038,27 @@
         const sidebarOverlay = document.getElementById('sidebarOverlay');
         menuToggle.addEventListener('click', () => { sidebar.classList.toggle('open'); sidebarOverlay.classList.toggle('show'); });
         sidebarOverlay.addEventListener('click', () => { sidebar.classList.remove('open'); sidebarOverlay.classList.remove('show'); });
+
+        // 图片预览
+        function openImageModal(src) {
+            document.getElementById('modalImage').src = src;
+            document.getElementById('imageModal').classList.add('open');
+        }
+        function closeImageModal() {
+            document.getElementById('imageModal').classList.remove('open');
+        }
+        // 给所有产品图片加点击事件
+        document.querySelectorAll('.product-card img').forEach(img => {
+            img.style.cursor = 'zoom-in';
+            img.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openImageModal(img.src);
+            });
+        });
+        // ESC关闭预览
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeImageModal();
+        });
     </script>
 </body>
 </html>
